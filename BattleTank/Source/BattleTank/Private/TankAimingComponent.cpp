@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/StaticMeshComponent.h"
 
 
@@ -35,10 +36,34 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt( FVector HitLocation, float LaunchSpeed )
 {
-	auto OurTankName = GetOwner()->GetName();
-	auto BarrelLocation = Barrel->GetComponentLocation();
-	UE_LOG( LogTemp, Warning, TEXT( "%s aiming at %s from %s" ), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString() )
-	UE_LOG( LogTemp, Warning, TEXT( "Firing at %f" ), LaunchSpeed )
+	if ( !Barrel ) { return; }
+	FVector OutLaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation( FName( "Projectile" ) );
+	TArray < AActor * > ActorsToIgnore;
+	if(UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace,
+		FCollisionResponseParams(),
+		ActorsToIgnore,
+		true))
+	{
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		auto OurTankName = GetOwner()->GetName();
+		//auto BarrelLocation = Barrel->GetComponentLocation();
+		//UE_LOG( LogTemp, Warning, TEXT( "%s aiming at %s from %s" ), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString() )
+		//UE_LOG( LogTemp, Warning, TEXT( "Firing at %f" ), LaunchSpeed )
+
+		UE_LOG( LogTemp, Warning, TEXT( "%s Aiming at %s" ), *OurTankName, *AimDirection.ToString() )
+	}
+
+
 }
 
 void UTankAimingComponent::SetBarrelReference( UStaticMeshComponent * BarrelToSet )
