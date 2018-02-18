@@ -55,7 +55,7 @@ void ATank::Fire()
 {
 	bool isReloaded = ( FPlatformTime::Seconds() - LastFireTime ) > ReloadTimeInSeconds;
 
-	if ( Barrel && isReloaded )
+	if ( Barrel && ProjectileBlueprint && isReloaded )
 	{
 		// Spawn a projectile at the socket location on the barrel
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
