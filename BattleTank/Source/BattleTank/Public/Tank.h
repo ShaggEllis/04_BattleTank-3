@@ -6,7 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UtankBarrel; // Forward Declaration
+// Forward Declaration
+class UTankBarrel;
+class UTankTurret;
 class UTankAimingComponent;
 
 UCLASS()
@@ -20,8 +22,11 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category=Setup)
+	UFUNCTION( BlueprintCallable, Category = Setup )
 	void SetBarrelReference( UTankBarrel* BarrelToSet );
+	
+	UFUNCTION(BlueprintCallable, Category=Setup)
+	void SetTurretReference( UTankTurret* TurretToSet );
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,6 +41,6 @@ public:
 
 private:
 	UPROPERTY( EditAnywhere, Category = Firing )
-	float LaunchSpeed = 10000; //TODO Find Sensible default value (starting value of 1000 m/s)
+	float LaunchSpeed = 8000;
 
 };
