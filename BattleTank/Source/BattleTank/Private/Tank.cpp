@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
+#include "TankMovementComponent.h"
 #include "Engine/StaticMeshSocket.h"
 
 // Sets default values
@@ -15,8 +16,10 @@ ATank::ATank()
 
 	//No need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-}
 
+	//No need to protect pointers as added at construction
+	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>( FName( "Movement Component" ) );
+}
 
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
@@ -25,15 +28,12 @@ void ATank::BeginPlay()
 	
 }
 
-
-
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
 }
-
 
 void ATank::AimAt( FVector HitLocation )
 {
