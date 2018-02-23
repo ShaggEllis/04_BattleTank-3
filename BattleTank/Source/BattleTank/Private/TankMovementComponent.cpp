@@ -36,7 +36,7 @@ void UTankMovementComponent::RequestDirectMove( const FVector & MoveVelocity, bo
 	//UE_LOG( LogTemp, Warning, TEXT( "%s RequestDirectMove %s" ), *GetOwner()->GetName(), *AIForwardIntention.ToString() );
 
 	auto RightThrow = FVector::CrossProduct( TankForward,AIForwardIntention ).GetSafeNormal().Z;
-	UE_LOG( LogTemp, Warning, TEXT( "%s IntendTurnRight %f" ), *GetOwner()->GetName(), RightThrow );
+	//UE_LOG( LogTemp, Warning, TEXT( "%s IntendTurnRight %f" ), *GetOwner()->GetName(), RightThrow );
 	IntendTurnRight( RightThrow );
 	
 }
