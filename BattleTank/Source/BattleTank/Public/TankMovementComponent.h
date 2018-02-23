@@ -27,7 +27,7 @@ public:
 	void IntendTurnRight( float Throw );
 
 private:
-	UTankTrack * LeftTrack = nullptr;
+	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 
 	// Called from the pathfinding logic by the AI controllers
