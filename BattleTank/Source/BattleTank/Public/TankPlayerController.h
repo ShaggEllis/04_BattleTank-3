@@ -50,4 +50,6 @@ private:
 
 	bool GetLookVectorHitLocation( FVector LookDirection, FVector& OutHitLocation ) const;
 
+	UTankAimingComponent* TankAimingComponent;
+
 };

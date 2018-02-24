@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "Engine/World.h"
 
 // Sets default values for this component's properties
@@ -87,3 +88,20 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//UE_LOG( LogTemp, Warning, TEXT( "DeltaRotator: %f" ), DeltaRotator.Pitch )
 }
 
+void UTankAimingComponent::Fire()
+{
+	bool isReloaded = ( FPlatformTime::Seconds() - LastFireTime ) > ReloadTimeInSeconds;
+	if ( !ensure( Barrel && ProjectileBlueprint ) ) { return; }
+	if ( isReloaded )
+	{
+		// Spawn a projectile at the socket location on the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation( FName( "Projectile" ) ),
+			Barrel->GetSocketRotation( FName( "Projectile" ) ) );
+
+		Projectile->LaunchProjectile( LaunchSpeed );
+		//UE_LOG( LogTemp, Warning, TEXT( "fire" ));
+		LastFireTime = FPlatformTime::Seconds();
+	}
+}

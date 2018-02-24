@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
+class UTankAimingComponent;
+
 /**
  * 
  */
@@ -27,4 +29,5 @@ private:
 	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
 	float AcceptanceRadius=3000;
 
+	UTankAimingComponent* TankAimingComponent;
 };

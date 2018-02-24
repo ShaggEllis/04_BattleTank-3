@@ -7,7 +7,8 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if( !GetPawn() ) { return; }
+	TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if ( !ensure( TankAimingComponent ) ) { return; }
 	FoundAimingComponent( TankAimingComponent );
 }
@@ -21,9 +22,7 @@ void ATankPlayerController::Tick( float DeltaTime )
  
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	auto TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if ( !ensure( TankAimingComponent ) ) { return; }
-
+	if ( !GetPawn() ) { return; }
 	FVector OutHitLocation;
 	// If it hits the landscape
 	if ( GetSightRayHitLocation( OutHitLocation ) )

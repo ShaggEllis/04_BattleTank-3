@@ -6,8 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-// Forward Declaration
-class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -18,21 +16,8 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UFUNCTION( BlueprintCallable, Category = "Firing" )
-	void Fire();
-
 private:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
-	float LaunchSpeed = 8000;
-
-	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
-	float ReloadTimeInSeconds = 3;
-
-	double LastFireTime = 0;
 };
