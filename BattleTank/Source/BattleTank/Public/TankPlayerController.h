@@ -7,7 +7,6 @@
 #include "TankPlayerController.generated.h"
 
 // if we remove these forward declaration, it compiles and run, probably because of magic UFUNCTION
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -27,9 +26,6 @@ public:
 	virtual void Tick( float DeltaTime ) override;
 
 protected:
-	UFUNCTION( BlueprintCallable, Category = "Setup" )
-	ATank * GetControlledTank() const;
-
 	UFUNCTION( BlueprintImplementableEvent, Category = "Setup" )
 	void FoundAimingComponent( UTankAimingComponent* AimCompRef );
 
