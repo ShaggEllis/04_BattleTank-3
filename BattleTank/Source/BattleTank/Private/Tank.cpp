@@ -13,7 +13,8 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
+	//auto TankName = GetName();
+	//UE_LOG( LogTemp, Warning, TEXT( "%s DONKEY: Constructor Tank.cpp C++" ),*TankName )
 	//No need to protect pointers as added at construction
 	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 
@@ -21,9 +22,17 @@ ATank::ATank()
 	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>( FName( "Movement Component" ) );
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay(); // Needed for Blueprint BeginPlay to run
+	//auto TankName = GetName();
+	//UE_LOG( LogTemp, Warning, TEXT( "%s DONKEY: BeginPlay Tank.cpp C++" ), *TankName )
+}
+
 void ATank::AimAt( FVector HitLocation )
 {
 	UTankAimingComponent* TankAimingComponent = this->FindComponentByClass<UTankAimingComponent>();
+	if ( !ensure(TankAimingComponent) ) { return; }
 	TankAimingComponent->AimAt( HitLocation, LaunchSpeed );
 }
 
@@ -31,7 +40,8 @@ void ATank::Fire()
 {
 	bool isReloaded = ( FPlatformTime::Seconds() - LastFireTime ) > ReloadTimeInSeconds;
 	UTankBarrel* Barrel = this->FindComponentByClass<UTankBarrel>(); //TODO to confirmed
-	if ( Barrel && ProjectileBlueprint && isReloaded )
+	if ( !ensure( Barrel && ProjectileBlueprint ) ) { return; }
+	if (isReloaded) 
 	{
 		// Spawn a projectile at the socket location on the barrel
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(

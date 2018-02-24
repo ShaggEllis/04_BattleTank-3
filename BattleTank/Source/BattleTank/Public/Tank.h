@@ -7,7 +7,7 @@
 #include "Tank.generated.h"
 
 // Forward Declaration
-class UTankAimingComponent;
+//lass UTankAimingComponent;
 //class UTankMovementComponent;
 class AProjectile;
 
@@ -17,7 +17,8 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
 	void AimAt(FVector HitLocation);
 
@@ -26,7 +27,7 @@ public:
 
 protected:
 	//UPROPERTY( BlueprintReadOnly, Category = "Input" )
-	UTankAimingComponent* TankAimingComponent = nullptr;
+	//UTankAimingComponent* TankAimingComponent = nullptr;
 
 	//UPROPERTY( BlueprintReadOnly, Category = "Input" )
 	//UTankMovementComponent* TankMovementComponent = nullptr;
