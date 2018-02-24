@@ -7,8 +7,6 @@
 #include "Tank.generated.h"
 
 // Forward Declaration
-//lass UTankAimingComponent;
-//class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -24,13 +22,6 @@ public:
 
 	UFUNCTION( BlueprintCallable, Category = "Firing" )
 	void Fire();
-
-protected:
-	//UPROPERTY( BlueprintReadOnly, Category = "Input" )
-	//UTankAimingComponent* TankAimingComponent = nullptr;
-
-	//UPROPERTY( BlueprintReadOnly, Category = "Input" )
-	//UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 	// Sets default values for this pawn's properties
