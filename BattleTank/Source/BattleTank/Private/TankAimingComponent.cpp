@@ -104,9 +104,29 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// rotate the barrel to point to the aim
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	//UE_LOG( LogTemp, Warning, TEXT( "DeltaRotator: %f" ), DeltaRotator.Pitch )
+	//UE_LOG( LogTemp, Warning, TEXT( "DeltaRotator.Pitch: %f" ), DeltaRotator.Pitch )
+	//UE_LOG( LogTemp, Warning, TEXT( "BarrelRotator: %s" ), *BarrelRotator.ToString() )
+	//UE_LOG( LogTemp, Warning, TEXT( "AimAsRotator: %s" ), *AimAsRotator.ToString() )
+	//UE_LOG( LogTemp, Warning, TEXT( "DeltaRotator: %s" ), *DeltaRotator.ToString() )
 	Barrel->Elevate( DeltaRotator.Pitch );
-	Turret->Rotate( DeltaRotator.Yaw );
+	// My solution
+	//if ( DeltaRotator.Yaw > 180 )
+	//{
+	//	DeltaRotator.Yaw = DeltaRotator.Yaw - 360;
+	//}
+	//if ( DeltaRotator.Yaw < -180 )
+	//{
+	//	DeltaRotator.Yaw = DeltaRotator.Yaw + 360;
+	//}
+	// Ben's Solution
+	if ( FMath::Abs(DeltaRotator.Yaw) < 180 )
+	{
+		Turret->Rotate( DeltaRotator.Yaw );
+	}
+	else
+	{
+		Turret->Rotate( -DeltaRotator.Yaw );
+	}
 
 	//UE_LOG( LogTemp, Warning, TEXT( "DeltaRotator: %f" ), DeltaRotator.Pitch )
 }
