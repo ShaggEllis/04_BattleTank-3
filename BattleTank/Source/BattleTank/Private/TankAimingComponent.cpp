@@ -41,6 +41,11 @@ void UTankAimingComponent::TickComponent( float DeltaTime, enum ELevelTick TickT
 	}
 }
 
+EFiringStatus UTankAimingComponent::GetFiringStatus() const
+{
+	return FiringStatus;
+}
+
 void UTankAimingComponent::Initialise( UTankBarrel* BarrelToSet, UTankTurret* TurretToSet )
 {
 	Barrel = BarrelToSet;
@@ -135,7 +140,7 @@ bool UTankAimingComponent::IsBarrelMoving()
 {
 	if ( !ensure( Barrel ) ) { return false; }
 	auto BarrelCurrentForwardVector = Barrel->GetForwardVector();
-	return ( !BarrelCurrentForwardVector.Equals( AimDirection, 0.05 ) );
+	return ( !BarrelCurrentForwardVector.Equals( AimDirection, 0.03 ) );
 }
 
 void UTankAimingComponent::Fire()
@@ -154,3 +159,5 @@ void UTankAimingComponent::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+

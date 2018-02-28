@@ -18,6 +18,9 @@ class BATTLETANK_API ATankAIController : public AAIController
 	
 public:
 
+protected:
+	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
+	float AcceptanceRadius = 8000;
 
 private:
 	// Called when the game starts or when spawned
@@ -26,8 +29,7 @@ private:
 	// Called every frame
 	virtual void Tick( float DeltaTime ) override;
 
-	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
-	float AcceptanceRadius=3000;
+
 
 	UTankAimingComponent* TankAimingComponent;
 };

@@ -34,6 +34,8 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "Firing" )
 	void Fire();
 
+	EFiringStatus GetFiringStatus() const;
+
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "State" )
 	EFiringStatus FiringStatus = EFiringStatus::Locked;
