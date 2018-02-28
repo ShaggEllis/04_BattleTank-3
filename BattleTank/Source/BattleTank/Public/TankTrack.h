@@ -24,18 +24,18 @@ public:
 	float TrackMaxDrivingForce = 400000; // Assume 40 tonne tank, and 1g accelleration
 
 private:
-		UTankTrack();
+	UTankTrack();
 		
-		//virtual void TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
+	//virtual void TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
 
-		void ApplySidewaysForce();
+	void ApplySidewaysForce();
 
-		virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 
-		void DriveTrack( );
+	void DriveTrack( );
 
-		float CurrentThrottle=0;
+	float CurrentThrottle=0;
 
-		UFUNCTION()
-		void OnHit( UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit );
+	UFUNCTION()
+	void OnHit( UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit );
 };

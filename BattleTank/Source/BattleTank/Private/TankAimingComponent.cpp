@@ -22,12 +22,17 @@ void UTankAimingComponent::BeginPlay()
 {
 		// So that first first is after initial reload
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft = 3;
 }
 
 	// ...
 void UTankAimingComponent::TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
  {
-	if ( ( FPlatformTime::Seconds() - LastFireTime ) < ReloadTimeInSeconds )
+	if ( RoundsLeft <= 0 )
+	{
+		FiringStatus = EFiringStatus::OutOfAmmo;
+	}
+	else if ( ( FPlatformTime::Seconds() - LastFireTime ) < ReloadTimeInSeconds )
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
@@ -39,11 +44,20 @@ void UTankAimingComponent::TickComponent( float DeltaTime, enum ELevelTick TickT
 	{
 		FiringStatus = EFiringStatus::Locked;
 	}
+	if ( RoundsLeft == 0 )
+	{
+		FiringStatus = EFiringStatus::OutOfAmmo;
+	}
 }
 
 EFiringStatus UTankAimingComponent::GetFiringStatus() const
 {
 	return FiringStatus;
+}
+
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
 }
 
 void UTankAimingComponent::Initialise( UTankBarrel* BarrelToSet, UTankTurret* TurretToSet )
@@ -145,7 +159,7 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 void UTankAimingComponent::Fire()
 {
-	if ( FiringStatus != EFiringStatus::Reloading )
+	if ( FiringStatus == EFiringStatus::Locked || FiringStatus == EFiringStatus::Aiming	)
 	{
 		if ( !ensure( Barrel && ProjectileBlueprint ) ) { return; }
 		// Spawn a projectile at the socket location on the barrel
@@ -157,6 +171,7 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile( LaunchSpeed );
 		//UE_LOG( LogTemp, Warning, TEXT( "fire" ));
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft--;
 	}
 }
 

@@ -11,7 +11,8 @@ enum class EFiringStatus : uint8
 {
 	Locked,
 	Aiming,
-	Reloading
+	Reloading,
+	OutOfAmmo
 };
 
 //Forward Declaration
@@ -36,6 +37,9 @@ public:
 
 	EFiringStatus GetFiringStatus() const;
 
+	UFUNCTION( BlueprintCallable, Category = "Firing" )
+	int GetRoundsLeft() const;
+
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "State" )
 	EFiringStatus FiringStatus = EFiringStatus::Locked;
@@ -54,7 +58,7 @@ private:
 	UTankTurret* Turret = nullptr;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
-	float LaunchSpeed = 8000;
+	float LaunchSpeed = 10000;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
 	TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -67,5 +71,7 @@ private:
 	bool IsBarrelMoving();
 
 	FVector AimDirection;
+
+	int RoundsLeft;
 
 };
