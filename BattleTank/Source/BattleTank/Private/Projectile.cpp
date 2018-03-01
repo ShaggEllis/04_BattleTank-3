@@ -12,6 +12,15 @@ AProjectile::AProjectile()
 	//No need to protect pointers as added at construction
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>( FName( "Projectile Movement Component" ) );
 	ProjectileMovementComponent->bAutoActivate = false;
+	
+	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>( FName( "CollisionMesh" ) );
+	SetRootComponent( CollisionMesh );
+	CollisionMesh->SetNotifyRigidBodyCollision( true );
+	CollisionMesh->SetVisibility( false );
+
+	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>( FName( "LaunchBlast" ) );
+	LaunchBlast->SetupAttachment( RootComponent ); //TODO check if needed
+
 }
 
 // Called when the game starts or when spawned

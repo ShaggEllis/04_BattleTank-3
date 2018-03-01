@@ -22,7 +22,6 @@ void UTankAimingComponent::BeginPlay()
 {
 		// So that first first is after initial reload
 		LastFireTime = FPlatformTime::Seconds();
-		RoundsLeft = 10;
 }
 
 	// ...
@@ -55,7 +54,7 @@ EFiringStatus UTankAimingComponent::GetFiringStatus() const
 	return FiringStatus;
 }
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
 }
