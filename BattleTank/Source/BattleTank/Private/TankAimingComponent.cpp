@@ -22,7 +22,7 @@ void UTankAimingComponent::BeginPlay()
 {
 		// So that first first is after initial reload
 		LastFireTime = FPlatformTime::Seconds();
-		RoundsLeft = 3;
+		RoundsLeft = 10;
 }
 
 	// ...
