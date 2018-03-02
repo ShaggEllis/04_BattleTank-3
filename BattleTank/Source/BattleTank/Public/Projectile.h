@@ -32,10 +32,10 @@ protected:
 	UPROPERTY( VisibleAnywhere, Category = "Component" )
 	UParticleSystemComponent* LaunchBlast = nullptr;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY( VisibleAnywhere, Category = "Component" )
+	UParticleSystemComponent* ImpactBlast = nullptr;
 
-	
-	
+private:
+	UFUNCTION()
+	void OnHit( UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit );
 };
