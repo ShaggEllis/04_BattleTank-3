@@ -7,6 +7,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -34,6 +35,9 @@ protected:
 
 	UPROPERTY( VisibleAnywhere, Category = "Component" )
 	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY( VisibleAnywhere, Category = "Component" )
+	URadialForceComponent* ExplosionForce = nullptr;
 
 private:
 	UFUNCTION()

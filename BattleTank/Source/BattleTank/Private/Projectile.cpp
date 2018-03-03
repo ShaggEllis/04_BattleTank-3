@@ -22,8 +22,12 @@ AProjectile::AProjectile()
 	LaunchBlast->SetupAttachment( RootComponent ); //TODO check if needed
 
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>( FName( "ImpactBlast" ) );
-	ImpactBlast->SetupAttachment( RootComponent ); //TODO check if needed
+	ImpactBlast->SetupAttachment( RootComponent ); 
 	ImpactBlast->bAutoActivate = false;
+
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>( FName( "ExplosionForce" ) );
+	ExplosionForce->SetupAttachment( RootComponent ); 
+	//ExplosionForce->bAutoActivate = false;
 
 }
 
@@ -32,6 +36,7 @@ void AProjectile::OnHit( UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 	//UE_LOG( LogTemp, Warning, TEXT( "I'm hit, I'm hit!" ) )
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
 }
 
 // Called when the game starts or when spawned
