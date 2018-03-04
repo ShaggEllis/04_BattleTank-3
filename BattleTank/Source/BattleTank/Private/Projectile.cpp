@@ -2,6 +2,7 @@
 
 #include "Projectile.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -37,6 +38,17 @@ void AProjectile::OnHit( UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	SetRootComponent( ImpactBlast );
+	CollisionMesh->DestroyComponent();
+	FTimerHandle SampleTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer( SampleTimerHandle, this, &AProjectile::DestroyProjectile, DestroyDelay,false );
+}
+
+// Called when the game starts or when spawned
+void AProjectile::DestroyProjectile()
+{
+	this->Destroy();
 }
 
 // Called when the game starts or when spawned
