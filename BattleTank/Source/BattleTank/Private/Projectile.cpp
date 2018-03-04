@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -41,8 +42,23 @@ void AProjectile::OnHit( UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 
 	SetRootComponent( ImpactBlast );
 	CollisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>()
+		);
+
 	FTimerHandle SampleTimerHandle;
-	GetWorld()->GetTimerManager().SetTimer( SampleTimerHandle, this, &AProjectile::DestroyProjectile, DestroyDelay,false );
+	GetWorld()->GetTimerManager().SetTimer(
+		SampleTimerHandle,
+		this,
+		&AProjectile::DestroyProjectile,
+		DestroyDelay,
+		false );
 }
 
 // Called when the game starts or when spawned

@@ -16,8 +16,18 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+protected:
+	virtual float TakeDamage( float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser )  override;
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
+
+	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
+	int32 StartingHealth = 100.0f;
+
+	UPROPERTY( VisibleAnywhere, Category = "Health" )
+	int32 CurrentHealth= StartingHealth;
+
 
 };
