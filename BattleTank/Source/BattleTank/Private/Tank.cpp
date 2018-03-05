@@ -16,11 +16,14 @@ ATank::ATank()
 	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>( FName( "Movement Component" ) );
 }
 
+
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for Blueprint BeginPlay to run
-						//auto TankName = GetName();
-						//UE_LOG( LogTemp, Warning, TEXT( "%s DONKEY: BeginPlay Tank.cpp C++" ), *TankName )
+	
+	//auto TankName = GetName();
+	//UE_LOG( LogTemp, Warning, TEXT( "%s DONKEY: BeginPlay Tank.cpp C++" ), *TankName )
+	CurrentHealth = StartingHealth;
 }
 
 
@@ -33,13 +36,14 @@ float ATank::TakeDamage( float DamageAmount, FDamageEvent const & DamageEvent, A
 {
 	//auto DamageToApply = CurrentHealth - FMath::Clamp<float>( CurrentHealth - Damage, 0, 100 );
 	int32 DamagePoints = FPlatformMath::RoundToInt( DamageAmount );
-	int32 DamageToApply = FMath::Clamp<float>( DamageAmount, 0, CurrentHealth );
+	int32 DamageToApply = FMath::Clamp<float>( DamagePoints, 0, CurrentHealth );
 	CurrentHealth-= DamageToApply;
 	auto TankName = GetName();
-	UE_LOG( LogTemp, Warning, TEXT( "DONKEY: %f DamageAmount to %s but only %i are applied" ), DamageAmount, *TankName ,DamageToApply)
+	UE_LOG( LogTemp, Warning, TEXT( "DONKEY: %i DamageAmount to %s but only %i are applied" ), DamagePoints, *TankName ,DamageToApply)
 	if ( CurrentHealth <= 0 )
 	{
-		UE_LOG( LogTemp, Warning, TEXT( "DONKEY: %s is DIED !!" ), *TankName)
+		//UE_LOG( LogTemp, Warning, TEXT( "DONKEY: %s is DIED !!" ), *TankName )
+		OnDepth.Broadcast();
 	}
 	return DamageToApply;
 }
